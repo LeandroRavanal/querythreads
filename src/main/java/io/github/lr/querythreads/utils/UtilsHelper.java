@@ -32,39 +32,39 @@ public class UtilsHelper {
 		long seconds = TimeUnit.MILLISECONDS.toSeconds(millis);
 		millis -= TimeUnit.SECONDS.toMillis(seconds);
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder result = new StringBuilder();
 		if (days > 0) {
-			sb.append(SPACE);
-			sb.append(days);
-			sb.append(SPACE);
-			sb.append(days == 1 ? "dia" : "dias");
+			result.append(SPACE);
+			result.append(days);
+			result.append(SPACE);
+			result.append(days == 1 ? "día" : "días");
 		}
 		if (hours > 0) {
-			sb.append(SPACE);
-			sb.append(hours);
-			sb.append(SPACE);
-			sb.append(hours == 1 ? "hora" : "horas");
+			result.append(SPACE);
+			result.append(hours);
+			result.append(SPACE);
+			result.append(hours == 1 ? "hora" : "horas");
 		}
 		if (minutes > 0) {
-			sb.append(SPACE);
-			sb.append(minutes);
-			sb.append(SPACE);
-			sb.append(minutes == 1 ? "minuto" : "minutos");
+			result.append(SPACE);
+			result.append(minutes);
+			result.append(SPACE);
+			result.append(minutes == 1 ? "minuto" : "minutos");
 		}
 		if (seconds > 0) {
-			sb.append(SPACE);
-			sb.append(seconds);
-			sb.append(SPACE);
-			sb.append(seconds == 1 ? "segundo" : "segundos");
+			result.append(SPACE);
+			result.append(seconds);
+			result.append(SPACE);
+			result.append(seconds == 1 ? "segundo" : "segundos");
 		}
 		if (days == 0 && hours == 0 && minutes == 0 && millis > 0) {
-			sb.append(SPACE);
-			sb.append(millis);
-			sb.append(SPACE);
-			sb.append(millis == 1 ? "milisegundo" : "milisegundos");
+			result.append(SPACE);
+			result.append(millis);
+			result.append(SPACE);
+			result.append(millis == 1 ? "milisegundo" : "milisegundos");
 		}
 
-		return (sb.toString());
+		return result.toString();
 	}
 
 	private static DecimalFormatSymbols symbols;

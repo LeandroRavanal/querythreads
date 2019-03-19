@@ -1,4 +1,4 @@
-# Consulta a BD usando hilos
+# Consulta a BD usando hilos en Java
 
 A veces una consulta a BD demora demasiado, en ese caso, podemos evaluar si realizando consultas por páginas mejoramos el rendimiento.
 
@@ -17,7 +17,7 @@ A veces una consulta a BD demora demasiado, en ese caso, podemos evaluar si real
 
 ### Código
 
-Utilizamos el API de concurrencia de Java, específicamente CompletableFuture que nos permite realizar pedidos asincrónicos, uno por cada página, y esperar la finalización de todos ellos.
+Utilizamos Spring Boot y el API de concurrencia de Java, específicamente CompletableFuture que nos permite realizar pedidos asincrónicos, uno por cada página, y esperar la finalización de todos ellos.
 
 ```
 futures[i] = CompletableFuture.runAsync(() -> { records.addAll( ... ); }, executor);

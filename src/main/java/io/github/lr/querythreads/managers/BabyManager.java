@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import io.github.lr.querythreads.entities.Baby;
 import io.github.lr.querythreads.services.DBSearchService;
@@ -49,7 +50,7 @@ public class BabyManager {
 	public List<Baby> getBabies() {
 		boolean result = waitForConditionToBeMet();
 		
-		if (result && !babiesList.isEmpty()) {
+		if (result && !CollectionUtils.isEmpty(babiesList)) {
 			return babiesList; 
 		}
 		

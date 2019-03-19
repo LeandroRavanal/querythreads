@@ -15,7 +15,7 @@ import io.github.lr.querythreads.entities.Baby;
 import io.github.lr.querythreads.managers.BabyManager;
 
 /**
- * Controlador que agrupa las operaciones (puntos de acceso) a la aplicacion.
+ * Controlador que agrupa las operaciones (puntos de acceso) a la aplicación.
  * 
  * @author lravanal
  *
