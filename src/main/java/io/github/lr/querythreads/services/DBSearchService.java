@@ -71,22 +71,29 @@ public abstract class DBSearchService<E extends AbstractEntity> {
 			return records;
 		}
 		
+		Relaunch relaunch = new Relaunch();
+		
 		final Queue<E> records = new ConcurrentLinkedQueue<E>();
 		
 		long start = System.currentTimeMillis();
 
 		final int count = (int) (count(params) + size - 1) / size;
-		final CompletableFuture<Void>[] futures = new CompletableFuture[count];
+		final CompletableFuture<Void>[] futures = new CompletableFuture[count + 1];
 		
 		logger.debug(MessageFormat.format("Cantidad de páginas: {0}", count));
 		
 		final ExecutorService executor = Executors.newFixedThreadPool(quantity);
 		
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < count + 1; i++) {
 			final int page = i;
 			
 			futures[i] = CompletableFuture.runAsync(() -> {
+				
 				records.addAll(findAll(PageRequest.of(page, size, Direction.ASC, ID), params).getContent());
+			
+				if (page == count && size == records.size()) {
+					relaunch.setTrue();
+				}
 			}, executor);
 		}
 		
@@ -107,6 +114,12 @@ public abstract class DBSearchService<E extends AbstractEntity> {
 		
 		logger.info(MessageFormat.format("Cantidad de registros leídos: {0}", records.size()));
 
+		if (relaunch.get()) {
+			logger.warn("Se relanza la búsqueda paginada dado que la última página adicional está completa");
+			
+			return findAllPaging(params);
+		}
+		
 		return records.stream().sorted((record1, record2) -> Long.compare(record1.getId(), record2.getId())).collect(Collectors.toList());
 	}
 	
@@ -120,6 +133,20 @@ public abstract class DBSearchService<E extends AbstractEntity> {
 
 	protected Page<E> findAll(PageRequest pageRequest, Object ... params) {
 		return repository.findAll(pageRequest);
+	}
+	
+	class Relaunch {
+		private boolean value = false;
+
+		public boolean get() {
+			return value;
+		}
+		public void setFalse() {
+			value = false;
+		}
+		public void setTrue() {
+			value = true;
+		}
 	}
 	
 }
