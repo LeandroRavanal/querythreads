@@ -34,12 +34,12 @@ public abstract class AbstractEntity {
             return false;
         }
         AbstractEntity e = (AbstractEntity) o;
-        return id == e.id;
+        return id != null && id.equals(e.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hashCode(id);
     }
     
 }
